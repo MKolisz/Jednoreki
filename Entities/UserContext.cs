@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
 using Microsoft.EntityFrameworkCore;
 
-namespace Jednoreki.Models
+namespace Jednoreki.Entities
 {
     public class UserContext : DbContext
     {
