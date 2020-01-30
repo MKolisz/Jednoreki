@@ -39,6 +39,7 @@ namespace Jednoreki
         {
 
             services.AddDbContext<UserContext>(options => options.UseSqlServer(Configuration.GetSection("Db")["ConnectionString"]));
+            services.AddDbContext<PaymentContext>(options => options.UseSqlServer(Configuration.GetSection("Db")["ConnectionString"]));
 
             services.AddCors();
             services.AddControllers();
@@ -87,10 +88,11 @@ namespace Jednoreki
 
             // configure DI for application services
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IPaymentService, PaymentService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, UserContext userContext)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, UserContext userContext, PaymentContext paymentContext)
         {
             if (env.IsDevelopment())
             {

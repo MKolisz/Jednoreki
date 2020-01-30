@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Jednoreki.Entities;
+using Jednoreki.Models.Payments;
 using Jednoreki.Models.Users;
 
 namespace Jednoreki.Helpers
@@ -15,6 +16,9 @@ namespace Jednoreki.Helpers
             CreateMap<User, UserModel>();
             CreateMap<RegisterModel, User>();
             CreateMap<UpdateModel, User>();
+
+            CreateMap<Payment, PaymentModel>();
+            CreateMap<PaymentModel, Payment>();
         }
     }
 }

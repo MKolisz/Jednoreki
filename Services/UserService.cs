@@ -60,7 +60,7 @@ namespace Jednoreki.Services
             if (string.IsNullOrWhiteSpace(password))
                 throw new AppException("Password is required");
 
-            if (_context.Users.Any(x => x.Name == user.Name))
+            if (_context.Users.Any(x => x.Login == user.Login))
                 throw new AppException("Login \"" + user.Login + "\" is already taken");
 
             byte[] passwordHash, passwordSalt;

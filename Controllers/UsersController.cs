@@ -104,13 +104,6 @@ namespace Jednoreki.Controllers
             return Ok(model);
         }
 
-        // GET: api/Users
-        //[HttpGet]
-        //public async Task<ActionResult<IEnumerable<User>>> GetUsers()
-        //{
-        //    return await _context.Users.ToListAsync();
-        //}
-
         // GET: api/Users/5
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
@@ -119,20 +112,6 @@ namespace Jednoreki.Controllers
             var model = _mapper.Map<UserModel>(user);
             return Ok(model);
         }
-
-        // GET: api/Users/5
-        //[HttpGet("{id}")]
-        //public async Task<ActionResult<User>> GetUser(int id)
-        //{  
-        //    var user = await _context.Users.FindAsync(id);
-        //var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
-        //    if (user == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return user;
-        //}
 
         // PUT: api/Users/5
         [HttpPut("{id}")]
@@ -154,6 +133,35 @@ namespace Jednoreki.Controllers
                 return BadRequest(new { message = ex.Message });
             }
         }
+
+        // DELETE: api/Users/5
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            _userService.Delete(id);
+            return Ok();
+        }
+
+        // GET: api/Users
+        //[HttpGet]
+        //public async Task<ActionResult<IEnumerable<User>>> GetUsers()
+        //{
+        //    return await _context.Users.ToListAsync();
+        //}
+
+        // GET: api/Users/5
+        //[HttpGet("{id}")]
+        //public async Task<ActionResult<User>> GetUser(int id)
+        //{  
+        //    var user = await _context.Users.FindAsync(id);
+        //var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
+        //    if (user == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    return user;
+        //}
 
         // PUT: api/Users/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
@@ -187,41 +195,33 @@ namespace Jednoreki.Controllers
             return NoContent();
         }*/
 
-        // DELETE: api/Users/5
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
-        {
-            _userService.Delete(id);
-            return Ok();
-        }
-
         // POST: api/Users
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
-        [HttpPost]
-        public async Task<ActionResult<User>> PostUser(User user)
-        {
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
+        //[HttpPost]
+        //public async Task<ActionResult<User>> PostUser(User user)
+        //{
+        //    _context.Users.Add(user);
+        //    await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetUser", new { id = user.Id }, user);
-        }
+        //    return CreatedAtAction("GetUser", new { id = user.Id }, user);
+        //}
 
         // DELETE: api/Users/5
-       /* [HttpDelete("{id}")]
-        public async Task<ActionResult<User>> DeleteUser(int id)
-        {
-            var user = await _context.Users.FindAsync(id);
-            if (user == null)
-            {
-                return NotFound();
-            }
+        /* [HttpDelete("{id}")]
+         public async Task<ActionResult<User>> DeleteUser(int id)
+         {
+             var user = await _context.Users.FindAsync(id);
+             if (user == null)
+             {
+                 return NotFound();
+             }
 
-            _context.Users.Remove(user);
-            await _context.SaveChangesAsync();
+             _context.Users.Remove(user);
+             await _context.SaveChangesAsync();
 
-            return user;
-        }*/
+             return user;
+         }*/
 
         private bool UserExists(int id)
         {
