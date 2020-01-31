@@ -10,6 +10,9 @@ namespace Jednoreki.Services
     public interface IPaymentService
     {
         Payment Create(Payment payment);
+        IEnumerable<Payment> GetAll();
+        IEnumerable<Payment> GetByUserId(int userId);
+        void Delete(int id);
     }
 
     public class PaymentService : IPaymentService
@@ -40,6 +43,28 @@ namespace Jednoreki.Services
 
 
             return payment;
+        }
+
+        public IEnumerable<Payment> GetAll()
+        {
+            return _context.Payments;
+        }
+
+        public IEnumerable<Payment> GetByUserId(int userId)
+        {
+            return from payments in _context.Payments
+                      where payments.UserId == userId
+                      select payments;
+        }
+
+        public void Delete(int id)
+        {
+            var payment = _context.Payments.Find(id);
+            if (payment != null)
+            {
+                _context.Payments.Remove(payment);
+                _context.SaveChanges();
+            }
         }
     }
 }

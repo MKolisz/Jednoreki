@@ -8,6 +8,6 @@ namespace Jednoreki.Models.Payments
     public class PaymentModel
     {
         public int UserId { get; set; }
-        public float Amount { get; set; }
+        public double Amount { get; set; }
     }
 }

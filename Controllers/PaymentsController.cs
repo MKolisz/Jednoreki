@@ -29,6 +29,7 @@ namespace Jednoreki.Controllers
             _mapper = mapper;
         }
 
+        // POST: api/Payments/MakePayment
         [HttpPost("MakePayment")]
         public IActionResult MakePayment([FromBody]PaymentModel model)
         {
@@ -46,6 +47,30 @@ namespace Jednoreki.Controllers
                 // return error message if there was an exception
                 return BadRequest(new { message = ex.Message });
             }
+        }
+
+        // GET: api/Payments
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            var payments = _paymentService.GetAll();
+            return Ok(payments);
+        }
+
+        // GET: api/Payments/5
+        [HttpGet("{userId}")]
+        public IActionResult GetById(int userId)
+        {
+            var payments = _paymentService.GetByUserId(userId);
+            return Ok(payments);
+        }
+
+        // DELETE: api/Users/5
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            _paymentService.Delete(id);
+            return Ok();
         }
     }
 }
