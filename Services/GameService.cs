@@ -42,11 +42,11 @@ namespace Jednoreki.Services
             prize -= game.Balance;
 
             Random rnd = new Random();
-            int number1 = rnd.Next(0, 4);
-            int number2 = rnd.Next(0, 4);
-            int number3 = rnd.Next(0, 4);
+            game.Number1 = rnd.Next(0, 4);
+            game.Number2 = rnd.Next(0, 4);
+            game.Number3 = rnd.Next(0, 4);
 
-            if(number1==number2&&number2==number3)
+            if(game.Number1==game.Number2&&game.Number2==game.Number3)
             {
                 prize += game.Balance * 21;
             }

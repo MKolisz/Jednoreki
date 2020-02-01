@@ -23,6 +23,8 @@ namespace Jednoreki.Helpers
 
             CreateMap<Game, GameModel>();
             CreateMap<GameModel, Game>();
+            //CreateMap<GameResultModel, Game>();
+            CreateMap<Game, GameResultModel>();
         }
     }
 }

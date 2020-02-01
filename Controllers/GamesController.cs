@@ -40,8 +40,9 @@ namespace Jednoreki.Controllers
             try
             {
                 // create payment
-                _gameService.Create(game);
-                return Ok();
+                var gameResult = _gameService.Create(game);
+                var result = _mapper.Map<GameResultModel>(gameResult);
+                return Ok(result);
             }
             catch (AppException ex)
             {
@@ -62,8 +63,8 @@ namespace Jednoreki.Controllers
         [HttpGet("{userId}")]
         public IActionResult GetById(int userId)
         {
-            var games = _gameService.GetByUserId(userId);
-            return Ok(games);
+            var game = _gameService.GetByUserId(userId);
+            return Ok(game);
         }
 
         // DELETE: api/Games/5
