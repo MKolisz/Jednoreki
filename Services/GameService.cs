@@ -10,6 +10,9 @@ namespace Jednoreki.Services
     public interface IGameService
     {
         Game Create(Game game);
+        IEnumerable<Game> GetAll();
+        IEnumerable<Game> GetByUserId(int userId);
+        void Delete(int id);
     }
 
     public class GameService : IGameService
@@ -62,6 +65,28 @@ namespace Jednoreki.Services
             _user_context.SaveChanges();
 
             return game;
+        }
+
+        public IEnumerable<Game> GetAll()
+        {
+            return _context.Games;
+        }
+
+        public IEnumerable<Game> GetByUserId(int userId)
+        {
+            return from games in _context.Games
+                   where games.UserId == userId
+                   select games;
+        }
+
+        public void Delete(int id)
+        {
+            var game = _context.Games.Find(id);
+            if (game != null)
+            {
+                _context.Games.Remove(game);
+                _context.SaveChanges();
+            }
         }
     }
 }

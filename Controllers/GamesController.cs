@@ -49,5 +49,29 @@ namespace Jednoreki.Controllers
                 return BadRequest(new { message = ex.Message });
             }
         }
+
+        // GET: api/Games
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            var games = _gameService.GetAll();
+            return Ok(games);
+        }
+
+        // GET: api/Games/5
+        [HttpGet("{userId}")]
+        public IActionResult GetById(int userId)
+        {
+            var games = _gameService.GetByUserId(userId);
+            return Ok(games);
+        }
+
+        // DELETE: api/Games/5
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            _gameService.Delete(id);
+            return Ok();
+        }
     }
 }
