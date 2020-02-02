@@ -63,8 +63,6 @@ namespace Jednoreki.Controllers
             var tokenString = tokenHandler.WriteToken(token);
 
             
-
-
             // return basic user info and authentication token
             return Ok(new
             {
@@ -108,9 +106,17 @@ namespace Jednoreki.Controllers
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            var user = _userService.GetById(id);
-            var model = _mapper.Map<UserModel>(user);
-            return Ok(model);
+            try
+            {
+                var user = _userService.GetById(id);
+                var model = _mapper.Map<UserModel>(user);
+                return Ok(model);
+            }
+            catch (AppException ex)
+            {
+                // return error message if there was an exception
+                return BadRequest(new { message = ex.Message });
+            }
         }
 
         // PUT: api/Users/5
@@ -138,8 +144,17 @@ namespace Jednoreki.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            _userService.Delete(id);
-            return Ok();
+            try
+            {
+                // delete user
+                _userService.Delete(id);
+                return Ok();
+            }
+            catch(AppException ex)
+            {
+                // return error message if there was an exception
+                return BadRequest(new { message = ex.Message });
+            }
         }
 
 

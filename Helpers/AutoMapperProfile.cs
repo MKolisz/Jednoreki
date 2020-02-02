@@ -18,7 +18,7 @@ namespace Jednoreki.Helpers
             CreateMap<RegisterModel, User>();
             CreateMap<UpdateModel, User>();
 
-            CreateMap<Payment, PaymentModel>();
+            //CreateMap<Payment, PaymentModel>();
             CreateMap<PaymentModel, Payment>();
 
             CreateMap<Game, GameModel>();

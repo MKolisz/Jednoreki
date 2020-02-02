@@ -29,14 +29,14 @@ namespace Jednoreki.Services
         public Game Create(Game game)
         {
             var user = _user_context.Users.Find(game.UserId);
-
-            //user doesn't exist
             if (user == null)
-                throw new AppException("User not found");
-            
+                throw new AppException("User not found, wrong id or id field is missing");
+
             //user doesn't have enough money to play
             if (game.Balance > user.Balance)
                 throw new AppException("You dont have enough money to play");
+            else if (game.Balance < 2)
+                throw new AppException("Minimum amount to play is 2");
 
             double prize = 0;
             prize -= game.Balance;
@@ -50,10 +50,7 @@ namespace Jednoreki.Services
             {
                 prize += game.Balance * 21;
             }
-            else
-            {
-                //TODO wyslac jakis komunikat o wygranej/przegranej
-            }
+
             user.Balance += prize;
             _user_context.Users.Update(user);
 
@@ -74,6 +71,9 @@ namespace Jednoreki.Services
 
         public IEnumerable<Game> GetByUserId(int userId)
         {
+            if (_user_context.Users.Find(userId) == null)
+                throw new AppException("User not found");
+
             return from games in _context.Games
                    where games.UserId == userId
                    select games;
@@ -87,6 +87,7 @@ namespace Jednoreki.Services
                 _context.Games.Remove(game);
                 _context.SaveChanges();
             }
+            else throw new AppException("Payment with given id doesn't exist");
         }
     }
 }

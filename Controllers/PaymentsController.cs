@@ -61,16 +61,32 @@ namespace Jednoreki.Controllers
         [HttpGet("{userId}")]
         public IActionResult GetById(int userId)
         {
-            var payments = _paymentService.GetByUserId(userId);
-            return Ok(payments);
+            try 
+            {
+                var payments = _paymentService.GetByUserId(userId);
+                return Ok(payments);
+            }
+            catch (AppException ex)
+            {
+                // return error message if there was an exception
+                return BadRequest(new { message = ex.Message});
+            }
         }
 
         // DELETE: api/Users/5
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            _paymentService.Delete(id);
-            return Ok();
+            try
+            {
+                _paymentService.Delete(id);
+                return Ok();
+            }
+            catch(AppException ex)
+            {
+                // return error message if there was an exception
+                return BadRequest(new { message = ex.Message });
+            }
         }
     }
 }

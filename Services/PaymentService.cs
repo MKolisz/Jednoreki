@@ -27,15 +27,21 @@ namespace Jednoreki.Services
 
         public Payment Create(Payment payment)
         {
+            var user = _user_context.Users.Find(payment.UserId);
+            if (user == null)
+                throw new AppException("User not found, wrong id or id field is missing");
+
+            if (payment.Amount <= 0)
+                throw new AppException("Amount required");
+            else if (payment.Amount > 200000)
+                throw new AppException("Maximum value is 200000");
+
             payment.Date = System.DateTime.Now;
             _context.Payments.Add(payment);
             _context.SaveChanges();
 
 
             //update user balance by payment amount
-            var user = _user_context.Users.Find(payment.UserId);
-            if (user == null)
-                throw new AppException("User not found");
 
             user.Balance += payment.Amount;
             _user_context.Users.Update(user);
@@ -52,6 +58,9 @@ namespace Jednoreki.Services
 
         public IEnumerable<Payment> GetByUserId(int userId)
         {
+            if (_user_context.Users.Find(userId) == null)
+                throw new AppException("User not found");
+
             return from payments in _context.Payments
                       where payments.UserId == userId
                       select payments;
@@ -65,6 +74,7 @@ namespace Jednoreki.Services
                 _context.Payments.Remove(payment);
                 _context.SaveChanges();
             }
+            else throw new AppException("Payment with given id doesn't exist");
         }
     }
 }

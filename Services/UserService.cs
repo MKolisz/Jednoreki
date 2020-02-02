@@ -51,7 +51,11 @@ namespace Jednoreki.Services
 
         public User GetById(int id)
         {
-            return _context.Users.Find(id);
+            var user = _context.Users.Find(id);
+            if (user == null)
+                throw new AppException("User not found, wrong id or id field is missing");
+            else
+                return user;
         }
 
         public User Create(User user, string password)
@@ -61,7 +65,7 @@ namespace Jednoreki.Services
                 throw new AppException("Password is required");
 
             if (_context.Users.Any(x => x.Login == user.Login))
-                throw new AppException("Login \"" + user.Login + "\" is already taken");
+                throw new AppException("Login " + user.Login + " is already taken");
 
             byte[] passwordHash, passwordSalt;
             CreatePasswordHash(password, out passwordHash, out passwordSalt);
@@ -125,6 +129,7 @@ namespace Jednoreki.Services
                 _context.Users.Remove(user);
                 _context.SaveChanges();
             }
+            else throw new AppException("User not found");
         }
 
         private static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
