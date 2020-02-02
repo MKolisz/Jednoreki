@@ -63,6 +63,14 @@ namespace Jednoreki.Services
             if (_context.Users.Any(x => x.Login == user.Login))
                 throw new AppException("Login " + user.Login + " is already taken");
 
+            if (user.Login.Length > 30)
+                throw new AppException("Login can contain max 30 characters");
+            else if(user.Name.Length>30)
+                throw new AppException("Name can contain max 30 characters");
+            else if(user.Email.Length>30)
+                throw new AppException("Email can contain max 30 characters");
+
+
             byte[] passwordHash, passwordSalt;
             CreatePasswordHash(password, out passwordHash, out passwordSalt);
 
@@ -77,10 +85,18 @@ namespace Jednoreki.Services
 
         public void Update(User userParam, string password = null)
         {
+
             var user = _context.Users.Find(userParam.Id);
 
             if (user == null)
                 throw new AppException("User not found");
+
+            if (userParam.Login.Length > 30)
+                throw new AppException("Login can contain max 30 characters");
+            else if (userParam.Name.Length > 30)
+                throw new AppException("Name can contain max 30 characters");
+            else if (userParam.Email.Length > 30)
+                throw new AppException("Email can contain max 30 characters");
 
             // update username if it has changed
             if (!string.IsNullOrWhiteSpace(userParam.Login) && userParam.Login != user.Login)

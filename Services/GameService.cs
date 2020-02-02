@@ -87,7 +87,7 @@ namespace Jednoreki.Services
                 _context.Games.Remove(game);
                 _context.SaveChanges();
             }
-            else throw new AppException("Payment with given id doesn't exist");
+            else throw new AppException("Game with given id doesn't exist");
         }
     }
 }
