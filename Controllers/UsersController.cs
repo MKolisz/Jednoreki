@@ -109,6 +109,8 @@ namespace Jednoreki.Controllers
             try
             {
                 var user = _userService.GetById(id);
+                if (user==null)
+                    throw new AppException("User not found, wrong id or id field is missing");
                 var model = _mapper.Map<UserModel>(user);
                 return Ok(model);
             }

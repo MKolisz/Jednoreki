@@ -51,11 +51,7 @@ namespace Jednoreki.Services
 
         public User GetById(int id)
         {
-            var user = _context.Users.Find(id);
-            if (user == null)
-                throw new AppException("User not found, wrong id or id field is missing");
-            else
-                return user;
+            return _context.Users.Find(id);
         }
 
         public User Create(User user, string password)

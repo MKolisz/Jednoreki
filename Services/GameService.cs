@@ -48,7 +48,7 @@ namespace Jednoreki.Services
 
             if(game.Number1==game.Number2&&game.Number2==game.Number3)
             {
-                prize += game.Balance * 21;
+                prize += game.Balance * 41;
             }
 
             user.Balance += prize;
